@@ -1,5 +1,5 @@
 var Navigation = require("Navigation");
-var navigate = new Navigation();
+
 
 Router.map(function(){
 	"use strict";
@@ -7,7 +7,16 @@ Router.map(function(){
 	this.route("login", {
 		path: '/login',
 		action: function() {
+			var navigate = new Navigation();
 			navigate.go("login");
+		}
+	});
+
+	this.route("main", {
+		path: '/main',
+		action: function() {
+			var navigate = new Navigation();
+			navigate.go("main");
 		}
 	});
 });

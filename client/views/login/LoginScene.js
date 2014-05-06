@@ -6,7 +6,6 @@ define("views/login/LoginScene", [], function(require, exports, module){
 	var MeteorSurface 		= require("famono/util/Surface");
 
 	var Navigation			= require("Navigation");
-	var navigate			= new Navigation();
 
 	var scene = new Scene({
 		id: "login",
@@ -33,6 +32,7 @@ define("views/login/LoginScene", [], function(require, exports, module){
 		events: {
 			"click": {
 				".sign-in": function() {
+					var navigate = new Navigation();
 					navigate.go("main");
 				}
 			}

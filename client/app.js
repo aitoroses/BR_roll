@@ -9,10 +9,10 @@ Meteor.startup(function(){
 
   var Router = require('Router');
 
-  Router.init();
+  var router = new Router();
   
-  Router.renderScene("login");
+  //Router.renderScene("login");
 
-  mainCtx.add(Router.view());
+  mainCtx.add(router.view());
 });
 

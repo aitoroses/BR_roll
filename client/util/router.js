@@ -1,36 +1,46 @@
 define("Router", [], function(require, exports, module){
 	"use strict";
 
-	var FamousRouter = {};
-	var RenderController = require('famous/views/RenderController');
-	
-	var renderController = new RenderController();
+	var _cached = null;
 
-	var routes = {};
+	function FamousRouter() {
 
-	function init() {
+		if(_cached != null) {return _cached;}
+		else {
 
-		var loginScene   = require("views/login/LoginScene");
-		var mainScene    = require("views/main/MainScene");
+			var RenderController = require('famous/views/RenderController');
+			
+			this._renderController = new RenderController();
 
-		routes = {
-			"login" : loginScene,
-			"main"  : mainScene
-		};
+			this._routes = {};
+
+			var loginScene   = require("views/login/LoginScene");
+			var mainScene    = require("views/main/MainScene");
+
+			this._routes = {
+				"login" : loginScene,
+				"main"  : mainScene
+			};
+
+			_cached = this;
+
+			return this;
+		}
 	}
-	
 
-	function renderScene(scene) {
-		renderController.show(routes[scene]);
-	}
+	FamousRouter.constructor = FamousRouter;
 
-	function view() {
-		return renderController;
-	}
+	FamousRouter.prototype.renderScene = function(scene) {
+		this._renderController.show(this._routes[scene]);
+	};
 
-	FamousRouter.renderScene = renderScene;
-	FamousRouter.view = view;
-	FamousRouter.init = init;
+	FamousRouter.prototype.view = function() {
+		return this._renderController;
+	};
+
+	FamousRouter.prototype.getRoutes = function() {
+		return this._routes;
+	};
 
 	module.exports = FamousRouter;
 });
