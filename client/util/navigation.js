@@ -7,22 +7,23 @@ define("Navigation", [], function(require, exports, module){
 
 		if (_cachedRouter != null) {this._router = _cachedRouter;}
 		else {
-			var Router = require("Router");
-			this._router = new Router();
+			var RouterFamous = require("Router");
+			this._router = new RouterFamous();
 			_cachedRouter = this._router;
 		}
-
-		Navigation.prototype.go = function(scene) {
-			window.location.replace(scene);
-		};
-
-		Navigation.prototype.render = function(scene) {
-			this._router.renderScene(scene);
-		};
 
 	};
 
 	Navigation.constructor = Navigation;
+
+	Navigation.prototype.go = function(scene) {
+		Router.go("/" + scene);
+	};
+
+	Navigation.prototype.render = function(scene) {
+		this._router.renderScene(scene);
+	};
+
 
 	module.exports = Navigation;
 });

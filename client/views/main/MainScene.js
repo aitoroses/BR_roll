@@ -4,21 +4,27 @@ define("views/main/MainScene", [], function(require, exports, module){
 	var Surface 	= require("famous/core/Surface");
 	var Scene 		= require("famous/core/Scene");
 
+	var surface = new Surface({
+		content: 'Happy Birthday Sexy',
+		size: [600, 400],
+		properties: {
+			fontSize: "60px",
+			lineHeight: "400px",
+			textAlign: "center"
+		}
+	});
+
 	var scene = new Scene({
-		id: "main",
+		id: "MainView",
 		target: [
 			{
-				target: {id: "main"}
-
+				target: {id: "main"},
+				origin: [0.5, 0.5]
 			}
 		]
 	});
 
-	var surface = new Surface({
-		content: 'Hello World'
-	});
+	scene.id.main.add(surface);
 
-	//scene.id.main.add(surface);
-
-	module.exports = surface;
+	module.exports = scene;
 });

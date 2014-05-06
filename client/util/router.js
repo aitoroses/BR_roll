@@ -23,7 +23,11 @@ define("Router", [], function(require, exports, module){
 	FamousRouter.constructor = FamousRouter;
 
 	FamousRouter.prototype.renderScene = function(scene) {
-		this._renderController.show(this._routes[scene]());
+		var sceneView = this._routes[scene]();
+		this._renderController.show(sceneView);
+		if (sceneView.animation != undefined) {
+			sceneView.animation.enter();
+		}
 	};
 
 	FamousRouter.prototype.view = function() {
@@ -36,6 +40,10 @@ define("Router", [], function(require, exports, module){
 
 	FamousRouter.prototype.addRoute = function(name, scene) {
 		this._routes[name] = scene;
+	};
+
+	FamousRouter.prototype.defaultRoute = function(scene) {
+		this._routes["default"] = scene;
 	};
 
 	FamousRouter.prototype.init = function() {
@@ -54,8 +62,18 @@ define("Router", [], function(require, exports, module){
 			};
 
 			for (var route in navigate._router.getRoutes()) {
-				createRoute.bind(Router,route)();
+				if (route != "default") {
+					createRoute.bind(Router,route)();
+				}
 			}
+
+			// Default route setup
+			this.route("/", {
+				path: '/',
+				action: function() {
+					navigate.render("default");
+				}
+			});
 		});
 	};
 
