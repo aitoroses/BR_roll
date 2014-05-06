@@ -14,14 +14,6 @@ define("Router", [], function(require, exports, module){
 
 			this._routes = {};
 
-			// var loginScene   = require("views/login/LoginScene");
-			// var mainScene    = require("views/main/MainScene");
-
-			// this._routes = {
-			// 	"login" : loginScene,
-			// 	"main"  : mainScene
-			// };
-
 			_cached = this;
 
 			return this;
@@ -56,7 +48,7 @@ define("Router", [], function(require, exports, module){
 			 	this.route(route, {
 					path: '/' + route,
 					action: function() {
-						navigate.go(route);
+						navigate.render(route);
 					}
 				});
 			};

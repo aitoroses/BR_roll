@@ -13,6 +13,10 @@ define("Navigation", [], function(require, exports, module){
 		}
 
 		Navigation.prototype.go = function(scene) {
+			window.location.replace(scene);
+		};
+
+		Navigation.prototype.render = function(scene) {
 			this._router.renderScene(scene);
 		};
 
