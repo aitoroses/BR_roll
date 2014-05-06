@@ -1,0 +1,26 @@
+<template name="LoginTemplate">
+    <section id="login">
+        {{> LoginForm}}
+    </section>
+</template>
+
+<template name="LoginForm">
+    <form class="login-form">
+        {{> LoginInputs}}
+        {{> LoginSubmit}}
+    </form>
+</template>
+
+<template name="LoginInputs">
+    <div class="inputs">
+        <input class="form-input" type="text" id="login" name="login" placeholder="¿Quien eres?">
+        <input class="form-input" type="password" name="password" id="password" placeholder="Contraseña">
+    </div>
+</template>
+
+<template name="LoginSubmit">
+    <button class="form-submit" type="submit" name="submit">
+        <div class="infinite">&infin;</div>
+        <div class="sign-in">Entra</div>
+    </button>
+</template>
