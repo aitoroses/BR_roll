@@ -4,6 +4,7 @@
 // -- meteor/helpers/CursorToArray: Cursor to array reactive mapper
 
 define("famono/util/Surface", function(require,exports,module) {
+  "use strict";
 
   var createSurface = function(s) {
 
@@ -52,9 +53,45 @@ define("famono/util/Surface", function(require,exports,module) {
 
     // attach events to the surface
     if (s.events != null) {
+
+      var $node = $(node);
+
+      // for each element in events
       for (var k in s.events) {
         if (s.events.hasOwnProperty(k)) {
-          surface.on(k, s.events[k]);
+
+          var eventType = k;
+
+          surface.on(eventType, function(e) {
+
+            // target node
+            var $target = $(e.target);
+            e.preventDefault();
+
+            if( typeof s.events[k] == "object" ) {
+              var selectors = s.events[k];
+
+              // General callback
+              if(selectors.surface != undefined) {
+                selectors.surface(e, surface);
+              }
+
+              for (var selector in selectors) {
+                if (selector != "surface") {
+                  // for each selector get if there is a node 
+                  var $el = $node.find(selector);
+                  if($el.length != 0) {
+                    // if target and selector match the same
+                    if ($el.is($target)) {
+                      var callback = selectors[selector];
+                      callback(e, surface);
+                    }
+                  }
+                } 
+                
+              }
+            }
+          });
         }
       }
     }
@@ -72,6 +109,7 @@ define("famono/util/Surface", function(require,exports,module) {
 });
 
 define("famono/util/CursorToArray", function(require,exports,module) {
+  "use strict";
 
   var cursorToArray = function(cursor, data, createFn) {
     cursor.observe({

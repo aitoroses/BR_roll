@@ -26,19 +26,21 @@ define("views/login/LoginView", function(require, exports, module){
 
 	var form = new MeteorSurface({
 		content: Template.LoginTemplate,
-		size: [300, 102]
-		// rendered: function(tmpl) {
-		// 	tmpl.find("button").click(function(e){
-		// 		e.preventDefault();
-		// 		console.log("Prevented default");
-		// 	});
-		// }
+		size: [300, 102],
+		events: {
+			
+			"click": {
+				".sign-in": function(e, surface) {
+					console.log(".sign-in", [e.target, surface]);
+				}
+			}
+		}
 	});
 
-	form.on("click", function(e) {
-		e.preventDefault();
-		console.log(e);
-	});
+	// form.on("click", function(e) {
+	// 	e.preventDefault();
+	// 	console.log(e.target);
+	// });
 
 	scene.id.background.add(background);
 	scene.id.form.add(form);

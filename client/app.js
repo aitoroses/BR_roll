@@ -1,7 +1,7 @@
-
 // Famous application main logic
 
 Meteor.startup(function(){
+  "use strict";
 
   var Engine  = require('famous/core/Engine');
 
