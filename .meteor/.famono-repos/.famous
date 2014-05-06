@@ -22,6 +22,10 @@
 		"famous/core/Transform",
 		"famous/core/Surface"
 	],
+	"famous/core/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
+	],
 	"famous/core/Modifier": [
 		"famous/core/Transform",
 		"famous/transitions/Transitionable",
@@ -64,11 +68,19 @@
 	"famous/events/EventMapper": [
 		"famous/core/EventHandler"
 	],
+	"famous/events/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
+	],
 	"famous/inputs/FastClick": [],
 	"famous/inputs/GenericSync": [
 		"famous/core/EventHandler",
 		"famous/inputs/TouchSync",
 		"famous/inputs/ScrollSync"
+	],
+	"famous/inputs/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
 	],
 	"famous/inputs/MouseSync": [
 		"famous/core/EventHandler"
@@ -96,6 +108,10 @@
 	"famous/inputs/TwoFingerSync": [
 		"famous/core/EventHandler"
 	],
+	"famous/math/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
+	],
 	"famous/math/Matrix": [
 		"famous/math/Vector"
 	],
@@ -118,12 +134,20 @@
 		"famous/transitions/Transitionable",
 		"famous/core/OptionsManager"
 	],
+	"famous/modifiers/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
+	],
 	"famous/modifiers/ModifierChain": [],
 	"famous/modifiers/StateModifier": [
 		"famous/core/Modifier",
 		"famous/core/Transform",
 		"famous/transitions/Transitionable",
 		"famous/transitions/TransitionableTransform"
+	],
+	"famous/physics/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
 	],
 	"famous/physics/PhysicsEngine": [
 		"famous/core/EventHandler"
@@ -216,10 +240,23 @@
 		"famous/core/Surface",
 		"famous/core/Context"
 	],
+	"famous/surfaces/FormContainerSurface": [
+		"famous/surfaces/ContainerSurface"
+	],
+	"famous/surfaces/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
+	],
 	"famous/surfaces/ImageSurface": [
 		"famous/core/Surface"
 	],
 	"famous/surfaces/InputSurface": [
+		"famous/core/Surface"
+	],
+	"famous/surfaces/SubmitInputSurface": [
+		"famous/surfaces/InputSurface"
+	],
+	"famous/surfaces/TextareaSurface": [
 		"famous/core/Surface"
 	],
 	"famous/surfaces/VideoSurface": [
@@ -227,6 +264,10 @@
 	],
 	"famous/transitions/CachedMap": [],
 	"famous/transitions/Easing": [],
+	"famous/transitions/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
+	],
 	"famous/transitions/MultipleTransition": [
 		"famous/utilities/Utility"
 	],
@@ -258,6 +299,10 @@
 		"famous/physics/forces/Spring",
 		"famous/physics/constraints/Wall",
 		"famous/math/Vector"
+	],
+	"famous/utilities/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
 	],
 	"famous/utilities/KeyCodes": [],
 	"famous/utilities/Timer": [
@@ -294,6 +339,10 @@
 		"famous/core/OptionsManager",
 		"famous/transitions/Transitionable",
 		"famous/transitions/TransitionableTransform"
+	],
+	"famous/views/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
 	],
 	"famous/views/HeaderFooterLayout": [
 		"famous/core/Entity",
@@ -350,6 +399,10 @@
 		"famous/core/Transform",
 		"famous/core/ViewSequence",
 		"famous/utilities/Utility"
+	],
+	"famous/widgets/Gruntfile": [
+		"load-grunt-tasks",
+		"time-grunt"
 	],
 	"famous/widgets/NavigationBar": [
 		"famous/core/Scene",

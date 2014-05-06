@@ -10,7 +10,8 @@
         "require": true,
         "exports": true,
         "module": true,
-        "Template": true
+        "Template": true,
+        "Router": true
     },
     "rules": {
         "valid-jsdoc": 0,
