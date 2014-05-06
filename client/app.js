@@ -11,8 +11,6 @@ Meteor.startup(function(){
 
   var router = new Router();
   
-  //Router.renderScene("login");
-
   mainCtx.add(router.view());
 });
 

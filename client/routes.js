@@ -1,22 +1,13 @@
-var Navigation = require("Navigation");
+var FamousRouter = require("Router");
 
+var router = new FamousRouter();
 
-Router.map(function(){
-	"use strict";
-
-	this.route("login", {
-		path: '/login',
-		action: function() {
-			var navigate = new Navigation();
-			navigate.go("login");
-		}
-	});
-
-	this.route("main", {
-		path: '/main',
-		action: function() {
-			var navigate = new Navigation();
-			navigate.go("main");
-		}
-	});
+router.addRoute("login", function() {
+	return require("views/login/LoginScene");
 });
+
+router.addRoute("main", function() {
+	return require("views/main/MainScene");
+});
+
+router.init();

@@ -39,11 +39,6 @@ define("views/login/LoginScene", [], function(require, exports, module){
 		}
 	});
 
-	// form.on("click", function(e) {
-	// 	e.preventDefault();
-	// 	console.log(e.target);
-	// });
-
 	scene.id.background.add(background);
 	scene.id.form.add(form);
 
