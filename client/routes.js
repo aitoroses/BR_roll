@@ -10,9 +10,14 @@ var loginScene = function(){
 var mainScene = function() {
 	return require("views/main/MainScene");
 };
+// Lightbox Scene
+var lightboxScene = function() {
+	return require("views/lightbox/LightboxScene");
+};
 
 router.defaultRoute(loginScene);
 router.addRoute("login", loginScene);
 router.addRoute("main", mainScene);
+router.addRoute("lightbox", lightboxScene);
 
 router.init();

@@ -1,4 +1,4 @@
-define("views/main/MainScene", [], function(require, exports, module){
+define("views/lightbox/LightboxScene", [], function(require, exports, module){
 	'use strict';
 
 	var Surface 	= require("famous/core/Surface");
