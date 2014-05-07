@@ -12,5 +12,7 @@ Meteor.startup(function(){
   var router = new Router();
   
   mainCtx.add(router.view());
+  
+  mainCtx.setPerspective(500);
 });
 

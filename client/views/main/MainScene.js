@@ -5,7 +5,7 @@ define("views/main/MainScene", [], function(require, exports, module){
 	var Scene 		= require("famous/core/Scene");
 
 	var surface = new Surface({
-		content: 'Hello World',
+		content: '<div>Hello Lightbox<a href="/lightbox"> [x]</a></div>',
 		size: [600, 400],
 		properties: {
 			fontSize: "60px",
