@@ -9,7 +9,7 @@ define("Router", [], function(require, exports, module){
 		else {
 
 			var RenderController = require('famous/views/RenderController');
-			
+
 			this._renderController = new RenderController();
 
 			this._routes = {};
@@ -21,6 +21,17 @@ define("Router", [], function(require, exports, module){
 	}
 
 	FamousRouter.constructor = FamousRouter;
+
+	FamousRouter.prototype.setTransitions = function (transitions) {
+		if (transitions == null) {return;}
+
+		if(transitions.in != null) {
+			this._renderController.setOptions({inTransition: transitions.in});
+		}
+		if(transitions.out != null) {
+			this._renderController.setOptions({outTransition: transitions.out});
+		}
+	};
 
 	FamousRouter.prototype.renderScene = function(scene) {
 		var sceneView = this._routes[scene]();

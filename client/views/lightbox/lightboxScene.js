@@ -7,9 +7,6 @@ define("views/lightbox/LightboxScene", [], function(require, exports, module){
 	var Transform        = require("famous/core/Transform");
 	var Easing           = require("famous/transitions/Easing");
 	var StateModifier    = require('famous/modifiers/StateModifier');
-	//var GridLayout  = require("famous/views/GridLayout");
-
-
 
 	function createSurface(origin, anchor) {
 
@@ -70,6 +67,18 @@ define("views/lightbox/LightboxScene", [], function(require, exports, module){
 	createSurface([1,0], anchor);
 	createSurface([0,1], anchor);
 	createSurface([1,1], anchor);
+
+	var link = new Surface({
+		content: '<a href="/grid">Go to grid</a>',
+		size: [600, 400],
+		properties: {
+			fontSize: "60px",
+			lineHeight: "400px",
+			textAlign: "center"
+		}
+	});
+
+	scene.id.main.add(new StateModifier({origin: [.5,.5]})).add(link);
 
 	module.exports = scene;
 

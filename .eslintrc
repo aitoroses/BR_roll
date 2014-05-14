@@ -30,6 +30,7 @@
         "space-infix-ops": 0,
         "strict": 1,
         "eqeqeq": 0,
-        "dot-notation": 0
+        "dot-notation": 0,
+        "no-wrap-func": 0
     }
 }

@@ -4,8 +4,5 @@
 	},
 	"famous-polyfills": {
 		"git": "https://github.com/Famous/polyfills.git"
-	},
-	"app": {
-		"git": "git://github.com/makesites/app.git"
-	}
+	}                
 }
