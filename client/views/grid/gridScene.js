@@ -1,28 +1,19 @@
 define("views/grid/GridScene", [], function(require, exports, module){
-	"use strict";
+	// "use strict";
 
-	var Surface  = require('famous/core/Surface');
-	var LightboxLayout = require('views/grid/LightboxLayout');
+	var LightboxGrid     = require("views/grid/LightboxGrid");
+	var SurfaceGenerator = require("views/grid/SurfaceGenerator");
 
-	var lightboxLayout = new LightboxLayout();
+	lightboxGrid = new LightboxGrid({dimensions: [2,2]});
 
-	var props = {
-		size: [150, 150],
-		properties: {
-			lineHeight: "150px",
-			textAlign: "center",
-			backgroundColor: "#DDD",
-			backfaceVisibility: "initial"
-		},
-		content: "Click on me"
-	};
-	
-	var surface = new Surface(props);
+	var surfaces = [
+		SurfaceGenerator(),
+		SurfaceGenerator(),
+		SurfaceGenerator(),
+		SurfaceGenerator()
+	];
 
-	var surface2 = new Surface(props);
+	lightboxGrid.sequenceFrom(surfaces);
 
-	lightboxLayout.addToOrigin(surface, [.5,0]);
-	lightboxLayout.addToOrigin(surface2, [.5,1]);
-
-	module.exports = lightboxLayout;
+	module.exports = lightboxGrid;
 });
