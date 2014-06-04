@@ -11,8 +11,6 @@ define('famous/math/Quaternion', ["famous/math/Matrix"], function(require, expor
     var Matrix = require('famous/math/Matrix');
 
     /**
-     * Docs: TODO
-     *
      * @class Quaternion
      * @constructor
      *

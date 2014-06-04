@@ -186,7 +186,7 @@ define('famous/views/RenderController', ["famous/core/Modifier","famous/core/Ren
         }
 
         if (this._showing >= 0) {
-            if (this.options.overlap) this.hide(callback);
+            if (this.options.overlap) this.hide();
             else {
                 if (this._nextRenderable) {
                     this._nextRenderable = renderable;

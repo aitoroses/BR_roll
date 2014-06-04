@@ -95,7 +95,7 @@ define('famous/views/Lightbox', ["famous/core/Transform","famous/core/Modifier",
         if (this._showing) {
             if (this.options.overlap) this.hide();
             else {
-                return this.hide(this.show.bind(this, renderable, callback));
+                return this.hide(this.show.bind(this, renderable, transition, callback));
             }
         }
         this._showing = true;

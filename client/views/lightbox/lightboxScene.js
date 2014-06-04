@@ -69,7 +69,7 @@ define("views/lightbox/LightboxScene", [], function(require, exports, module){
 	createSurface([1,1], anchor);
 
 	var link = new Surface({
-		content: '<a href="/grid">Go to grid</a>',
+		content: '<a href="/gallery">Go to grid</a>',
 		size: [600, 400],
 		properties: {
 			fontSize: "60px",

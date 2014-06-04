@@ -18,7 +18,7 @@ define('famous/modifiers/ModifierChain', [], function(require, exports, module) 
      */
     function ModifierChain() {
         this._chain = [];
-        if (arguments.length) this.add.apply(this, arguments);
+        if (arguments.length) this.addModifier.apply(this, arguments);
     }
 
     /**

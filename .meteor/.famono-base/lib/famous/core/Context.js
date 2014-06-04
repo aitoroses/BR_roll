@@ -46,6 +46,7 @@ define('famous/core/Context', ["famous/core/RenderNode","famous/core/EventHandle
             transform: Transform.identity,
             opacity: 1,
             origin: _originZeroZero,
+            align: null,
             size: this._size
         };
 
@@ -121,6 +122,7 @@ define('famous/core/Context', ["famous/core/RenderNode","famous/core/EventHandle
             if (contextParameters.transform) this._nodeContext.transform = contextParameters.transform;
             if (contextParameters.opacity) this._nodeContext.opacity = contextParameters.opacity;
             if (contextParameters.origin) this._nodeContext.origin = contextParameters.origin;
+            if (contextParameters.align) this._nodeContext.align = contextParameters.align;
             if (contextParameters.size) this._nodeContext.size = contextParameters.size;
         }
         var perspective = this._perspectiveState.get();

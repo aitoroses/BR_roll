@@ -15,14 +15,14 @@ var lightboxScene = function() {
 	return require("views/lightbox/LightboxScene");
 };
 // Grid Scene
-var gridScene = function() {
-	return require("views/grid/GridScene");
+var galleryScene = function() {
+	return require("views/gallery/GalleryView");
 };
 
 router.defaultRoute(loginScene);
 router.addRoute("login", loginScene);
 router.addRoute("main", mainScene);
 router.addRoute("lightbox", lightboxScene);
-router.addRoute("grid", gridScene);
+router.addRoute("gallery", galleryScene);
 
 router.init();

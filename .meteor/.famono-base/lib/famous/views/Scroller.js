@@ -87,10 +87,12 @@ define('famous/views/Scroller', ["famous/core/Entity","famous/core/Group","famou
     Scroller.prototype.setOptions = function setOptions(options) {
         this._optionsManager.setOptions(options);
 
-        if (this.options.groupScroll)
-            this.group.pipe(this._eventOutput);
-        else
-            this.group.unpipe(this._eventOutput);
+        if (this.options.groupScroll) {
+          this.group.pipe(this._eventOutput);
+        }
+        else {
+          this.group.unpipe(this._eventOutput);
+        }
     };
 
     /**
@@ -195,7 +197,8 @@ define('famous/views/Scroller', ["famous/core/Entity","famous/core/Group","famou
         // reset edge detection on size change
         if (!this.options.clipSize && (size[0] !== this._contextSize[0] || size[1] !== this._contextSize[1])) {
             this._onEdge = 0;
-            this._contextSize = size;
+            this._contextSize[0] = size[0];
+            this._contextSize[1] = size[1];
 
             if (this.options.direction === Utility.Direction.X) {
                 this._size[0] = _getClipSize.call(this);
@@ -211,6 +214,7 @@ define('famous/views/Scroller', ["famous/core/Entity","famous/core/Group","famou
 
         return {
             transform: Transform.multiply(transform, scrollTransform),
+            size: size,
             opacity: opacity,
             origin: origin,
             target: this.group.render()

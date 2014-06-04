@@ -184,9 +184,8 @@ define('famous/utilities/Timer', ["famous/core/Engine"], function(require, expor
                 }
             };
 
-            if (!timeout) {
-                timeout = setTimeout(fn, wait);
-            }
+            clear(timeout);
+            timeout = setTimeout(fn, wait);
 
             return result;
         };

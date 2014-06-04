@@ -15,7 +15,7 @@ define('famous/physics/bodies/Rectangle', ["famous/physics/bodies/Body","famous/
      * Implements a rectangular geometry for an Body with
      * size = [width, height].
      *
-     * @class Circle
+     * @class Rectangle
      * @extends Body
      * @constructor
      */

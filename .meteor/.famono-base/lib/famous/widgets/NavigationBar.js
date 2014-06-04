@@ -14,7 +14,7 @@ define('famous/widgets/NavigationBar', ["famous/core/Scene","famous/core/Surface
     var View = require('famous/core/View');
 
     /**
-     * A view for display for displaying the title of the current page
+     * A view for displaying the title of the current page
      *  as well as icons for navigating backwards and opening
      *  further options
      *
@@ -22,7 +22,7 @@ define('famous/widgets/NavigationBar', ["famous/core/Scene","famous/core/Surface
      * @extends View
      * @constructor
      *
-     * @param {object} [options] overrides of deault options
+     * @param {object} [options] overrides of default options
      * @param {Array.number} [options.size=(undefined,0.5)] Size of the navigation bar and it's componenets.
      * @param {Array.string} [options.backClasses=(back)] CSS Classes attached to back of Navigation.
      * @param {String} [options.backContent=(&#x25c0;)] Content of the back button.

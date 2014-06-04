@@ -7,20 +7,22 @@
  * @copyright Famous Industries, Inc. 2014
  */
 
-define('famous/views/Scrollview', ["famous/utilities/Utility","famous/physics/PhysicsEngine","famous/physics/bodies/Particle","famous/physics/forces/Drag","famous/physics/forces/Spring","famous/inputs/GenericSync","famous/core/EventHandler","famous/core/OptionsManager","famous/core/ViewSequence","famous/views/Scroller"], function(require, exports, module) {
-    var Utility = require('famous/utilities/Utility');
-
+define('famous/views/Scrollview', ["famous/physics/PhysicsEngine","famous/physics/bodies/Particle","famous/physics/forces/Drag","famous/physics/forces/Spring","famous/core/EventHandler","famous/core/OptionsManager","famous/core/ViewSequence","famous/views/Scroller","famous/utilities/Utility","famous/inputs/GenericSync","famous/inputs/ScrollSync","famous/inputs/TouchSync"], function(require, exports, module) {
     var PhysicsEngine = require('famous/physics/PhysicsEngine');
     var Particle = require('famous/physics/bodies/Particle');
     var Drag = require('famous/physics/forces/Drag');
     var Spring = require('famous/physics/forces/Spring');
 
-    var GenericSync = require('famous/inputs/GenericSync');
     var EventHandler = require('famous/core/EventHandler');
     var OptionsManager = require('famous/core/OptionsManager');
     var ViewSequence = require('famous/core/ViewSequence');
-
     var Scroller = require('famous/views/Scroller');
+    var Utility = require('famous/utilities/Utility');
+
+    var GenericSync = require('famous/inputs/GenericSync');
+    var ScrollSync = require('famous/inputs/ScrollSync');
+    var TouchSync = require('famous/inputs/TouchSync');
+    GenericSync.register({scroll : ScrollSync, touch : TouchSync});
 
     /**
      * Scrollview will lay out a collection of renderables sequentially in the specified direction, and will
@@ -70,7 +72,7 @@ define('famous/views/Scrollview', ["famous/utilities/Utility","famous/physics/Ph
         this.drag = new Drag({forceFunction: Drag.FORCE_FUNCTIONS.QUADRATIC});
         this.friction = new Drag({forceFunction: Drag.FORCE_FUNCTIONS.LINEAR});
 
-        this.sync = new GenericSync({direction : this.options.direction});
+        this.sync = new GenericSync(['scroll', 'touch'], {direction : this.options.direction});
 
         this._eventInput = new EventHandler();
         this._eventOutput = new EventHandler();
@@ -351,7 +353,7 @@ define('famous/views/Scrollview', ["famous/utilities/Utility","famous/physics/Ph
      * Sets the Scrollview instance's velocity. Until affected by input or another call of setVelocity
      *  the Scrollview instance will scroll at the passed-in velocity.
      * @method setVelocity
-     * @param {number} v TThe magnitude of the velocity.
+     * @param {number} v The magnitude of the velocity.
      */
     Scrollview.prototype.setVelocity = function setVelocity(v) {
         this._particle.setVelocity1D(v);
@@ -372,6 +374,12 @@ define('famous/views/Scrollview', ["famous/utilities/Utility","famous/physics/Ph
             this._scroller.setOptions(options);
             this._optionsManager.setOptions(options);
         }
+
+        this._scroller.setOptions(this.options);
+        if (this.options.groupScroll)
+            this._scroller.pipe(this._eventInput);
+        else
+            this._scroller.unpipe(this._eventInput);
 
         this.drag.setOptions({strength: this.options.drag});
         this.friction.setOptions({strength: this.options.friction});

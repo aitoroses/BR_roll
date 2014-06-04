@@ -1,0 +1,79 @@
+{
+	"broll/LightboxGallery/data/SlideData": [],
+	"broll/LightboxGallery/index": [
+		"famous/core/Engine",
+		"famous/utilities/Utility",
+		"broll/LightboxGallery/views/AppView",
+		"broll/LightboxGallery/data/SlideData"
+	],
+	"broll/LightboxGallery/views/AppView": [
+		"famous/core/View",
+		"famous/core/Transform",
+		"famous/modifiers/StateModifier",
+		"famous/surfaces/ImageSurface",
+		"famous/surfaces/ContainerSurface",
+		"broll/LightboxGallery/views/SlideshowView",
+		"broll/LightboxGallery/views/SlideSidebarView"
+	],
+	"broll/LightboxGallery/views/EmptyView": [
+		"famous/core/View",
+		"famous/core/Surface",
+		"famous/core/Transform",
+		"famous/modifiers/StateModifier"
+	],
+	"broll/LightboxGallery/views/SlideSidebarView": [
+		"famous/core/Engine",
+		"famous/core/View",
+		"famous/core/Transform",
+		"famous/modifiers/StateModifier",
+		"famous/surfaces/ImageSurface",
+		"famous/transitions/Easing",
+		"famous/views/Scrollview",
+		"famous/core/RenderNode"
+	],
+	"broll/LightboxGallery/views/SlideView": [
+		"famous/core/View",
+		"famous/core/Surface",
+		"famous/core/Transform",
+		"famous/modifiers/StateModifier",
+		"famous/surfaces/ImageSurface",
+		"famous/transitions/Transitionable",
+		"famous/transitions/SpringTransition"
+	],
+	"broll/LightboxGallery/views/SlideshowView": [
+		"famous/core/View",
+		"famous/core/Transform",
+		"famous/modifiers/StateModifier",
+		"famous/views/Lightbox",
+		"famous/transitions/Easing",
+		"broll/LightboxGallery/views/SlideView"
+	],
+	"broll/MiniMenu/index": [
+		"famous/core/Engine",
+		"broll/MiniMenu/views/AppView"
+	],
+	"broll/MiniMenu/views/AppView": [
+		"famous/core/View",
+		"famous/core/Surface",
+		"famous/core/Transform",
+		"famous/modifiers/StateModifier",
+		"broll/MiniMenu/views/MenuView"
+	],
+	"broll/MiniMenu/views/MenuItemView": [
+		"famous/core/View",
+		"famous/core/Surface",
+		"famous/surfaces/ImageSurface",
+		"famous/core/Transform",
+		"famous/modifiers/StateModifier"
+	],
+	"broll/MiniMenu/views/MenuView": [
+		"famous/core/View",
+		"famous/core/Surface",
+		"famous/core/Transform",
+		"famous/modifiers/StateModifier",
+		"famous/core/Modifier",
+		"famous/transitions/Easing",
+		"famous/transitions/Transitionable",
+		"broll/MiniMenu/views/MenuItemView"
+	]
+}
