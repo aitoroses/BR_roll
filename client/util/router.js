@@ -71,9 +71,14 @@ define("Router", [], function(require, exports, module){
 							navigate.render(route);
 						}
 					},
-					waitOn: function () {
-					    return Meteor.subscribe('Example');
-					}
+					waitOn: [
+						function () {
+					    	return Meteor.subscribe('Example');
+						},
+						function () {
+					    	return Meteor.subscribe('images');
+						},
+					]
 				});
 			};
 

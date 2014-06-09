@@ -9,15 +9,24 @@ define("views/gallery/GalleryView", [], function(require, exports, module){
     // import the AppView class using require
     var AppView = require('broll/LightboxGallery/views/AppView');
 
-    // import SlideData
-    var SlideData = require('broll/LightboxGallery/data/SlideData');
+    // // import SlideData
+    // var SlideData = require('broll/LightboxGallery/data/SlideData');
     
-    // Get request to the picasa with callback
-    Utility.loadURL(SlideData.getUrl(), initApp);
+    // // Get request to the picasa with callback
+    // Utility.loadURL(SlideData.getUrl(), initApp);
+
+    function parseData() {
+        var data = Dropboxer.collection.find().fetch();
+        return data.map(function(image){
+            return 'data:' + image.mime + ';base64,' + image.data; 
+        });
+    }
+
+    initApp(parseData());
 
     function initApp(data) {
         // parses out reponse data and retrieves array of urls
-        data = SlideData.parse(data);
+        //data = SlideData.parse(data);
 
         // instantiates AppView with our url data
         var appView = new AppView({ data : data });
