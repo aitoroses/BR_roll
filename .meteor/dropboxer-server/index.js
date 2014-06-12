@@ -82,7 +82,7 @@ API.get('/file/:filename', function *() {
 });
 
 // GET cached file
-API.get('/cached/:filename', function *() {
+API.get('/cache/:filename', function *() {
 	var filename = this.params['filename'];
 	console.log("Asking for filename " + filename);  
         var fullpath = path.join(__dirname,'cache', filename);
