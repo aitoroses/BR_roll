@@ -5,8 +5,11 @@ var thunkify = require('thunkify');
 var fsstat = thunkify(fs.stat);
 var fsWriteFile = thunkify(fs.writeFile);
 var fsReadFile = thunkify(fs.readFile);
+var easyimg = require('easyimage');
+var thumbnail = thunkify(easyimg.thumbnail);
 
 var koa = require('koa'),
+    etag = require('koa-etag'),
     Router = require('koa-router'),
     mount = require('koa-mount');
 
@@ -23,6 +26,8 @@ app.use(function *(next) {
   var ms = new Date - start;
   console.log('%s %s - %s', this.method, this.url, ms + 'ms');
 });
+
+app.use(etag());
 
 var API = new Router();
 
@@ -91,10 +96,39 @@ API.get('/cache/:filename', function *() {
 	stat.isFile() ? console.log("File found.") : console.log("File not found.");
 	var file = yield fsReadFile(fullpath);
 	var type = mime.lookup(fullpath);
-	this.body = file
-        //this.body = 'data:' + type + ';base64,' + new Buffer(file, 'binary').toString('base64');	
+	this.body = file;
 	this.set('Content-Type', type);
-	//this.set('Content-Disposition', 'attachment; filename=' + filename);
+        this.set('Content-Length', this.body.length);
+});
+
+// GET cached image thumb
+API.get('/thumb/:filename', function *() {
+	if (typeof this.header["if-none-match"] == "string") {
+                this.status = 304;
+                return;
+        }
+	var filename = this.params['filename'];
+        var fullpath = path.join(__dirname,'cache', filename);
+	var thumbpath = fullpath.replace('cache', 'cache/thumb');
+	try {
+        	var stat = yield fsstat(thumbpath);
+	} catch (e) {
+       		var file = yield fsReadFile(fullpath);
+       		var type = mime.lookup(fullpath);
+		// Crop the file
+		yield thumbnail({
+			src: fullpath,
+			dst: path.join(__dirname, 'cache', 'thumb', filename),
+			width: 128,
+			height: 128,
+			x: 0,
+			y: 0
+		});
+	}
+        var file = yield fsReadFile(thumbpath);
+        var type = mime.lookup(thumbpath);
+        this.body = file;
+        this.set('Content-Type', type);
         this.set('Content-Length', this.body.length);
 });
 
