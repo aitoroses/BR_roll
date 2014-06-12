@@ -19,6 +19,7 @@ function defaultResponse(next) {
 if (Meteor.isServer) {
     var Fiber = Meteor.require("fibers");
     var Future = Meteor.require("fibers/future");
+    var path = Meteor.require('path');
 
     Meteor.publish('images', function(){
         return Dropboxer.collection.find();
@@ -27,11 +28,13 @@ if (Meteor.isServer) {
     Meteor.methods({
         /** Return the list of files in the preconfigured folder */
         'dropboxer-list': function() {
-            var uri = 'http://' + host + ':' + port + '/dropbox/list';
+            var pathname = '/Cumplebollo2014/fotos/';
+            var uri = 'http://' + host + ':' + port + '/dropbox/list' + '?path=' + pathname;
             return HTTP.get(uri);
         },
         'dropboxer-file': function(name) {
-            var uri = 'http://' + host + ':' + port + '/dropbox/file/' + name;
+            var pathname = '/Cumplebollo2014/fotos/';
+            var uri = 'http://' + host + ':' + port + '/dropbox/file/' + name + '?path=' + pathname;
             var image = HTTP.get(uri);
             var imageObj = {
                 filename: name,
@@ -43,8 +46,9 @@ if (Meteor.isServer) {
             return imageObj;
         },
         'dropboxer-sync-db': function() {
+            var pathname = '/Cumplebollo2014/fotos/';
             // Synchronize dropbox with mongodb collection
-            var uri = 'http://' + host + ':' + port + '/dropbox/list';
+            var uri = 'http://' + host + ':' + port + '/dropbox/list' + '?path=' + pathname;
             var list = JSON.parse(HTTP.get(uri).content);
 
             // cleanup collection
@@ -71,11 +75,12 @@ if (Meteor.isServer) {
 
                 // Make the async job
                 console.log(image, ' - ', new Date - now + 'ms');
-                var uri = 'http://' + host + ':' + port + '/dropbox/file/' + image;
+                var uri = 'http://' + host + ':' + port + '/dropbox/file/' + image + '?path=' + pathname;
                 Meteor.http.get(uri, function(err, res){
                     var imageObj = {
                         filename: image,
-                        data: res.content,
+                        //data: res.content,
+			data: uri.replace('file', 'cache'),
                         mime: res.headers['content-type'],
                         created_at: new Date
                     };

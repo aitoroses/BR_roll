@@ -18,7 +18,8 @@ define("views/gallery/GalleryView", [], function(require, exports, module){
     function parseData() {
         var data = Dropboxer.collection.find().fetch();
         return data.map(function(image){
-            return 'data:' + image.mime + ';base64,' + image.data; 
+            // return 'data:' + image.mime + ';base64,' + image.data; 
+	    return 'http://' + location.hostname + ':3100/dropbox/thumb/' + image.filename;
         });
     }
 
