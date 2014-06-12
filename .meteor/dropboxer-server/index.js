@@ -90,10 +90,11 @@ API.get('/cache/:filename', function *() {
 	var stat = yield fsstat(fullpath);
 	stat.isFile() ? console.log("File found.") : console.log("File not found.");
 	var file = yield fsReadFile(fullpath);
-	this.body = new Buffer(file, 'binary').toString('base64');	
 	var type = mime.lookup(fullpath);
+	this.body = file
+        //this.body = 'data:' + type + ';base64,' + new Buffer(file, 'binary').toString('base64');	
 	this.set('Content-Type', type);
-	this.set('Content-Disposition', 'attachment; filename=' + filename);
+	//this.set('Content-Disposition', 'attachment; filename=' + filename);
         this.set('Content-Length', this.body.length);
 });
 
