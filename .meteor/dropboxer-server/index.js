@@ -1,4 +1,6 @@
 var fs = require('fs');
+var path = require('path');
+var mime = require('mime');
 var thunkify = require('thunkify');
 var fsstat = thunkify(fs.stat);
 var fsWriteFile = thunkify(fs.writeFile);
@@ -31,39 +33,44 @@ API.get('/accountInfo', function *() {
 
 // GET Dir list
 API.get('/list', function *() {
-    this.body = yield Dropbox.readdir('/');
+    var path = this.query.path || '/';
+    this.body = yield Dropbox.readdir(path);
 });
 
 // GET File stat
-API.get('/stat', function *() {
-    this.body = yield Dropbox.stat('zrc_cs.jpg');
+API.get('/stat/:filename', function *() {
+    var pathname = this.query.path || '/';
+    var filename = this.params['filename'];
+    this.body = yield Dropbox.stat(path.join(pathname,filename));
 });
 
 // GET File API
 API.get('/file/:filename', function *() {
 
+    var pathname = this.query.path || '/'; 
     var filename = this.params['filename'],
         mimeType = 'image/jpeg';
 
     // path
-    var path = __dirname + '/cache/' + filename;
+    var cachePath = __dirname + '/cache/' + filename;
+    console.log(path.join(pathname,filename));
 
     // Read from cache
     try {
-        var fileStat = yield fsstat(path);
-        var file = yield fsReadFile(path);
+        var fileStat = yield fsstat(cachePath);
+        var file = yield fsReadFile(cachePath);
         if (file == null) {throw new Error('Not file found.')}
         this.body = new Buffer(file, 'binary').toString('base64');
     } catch (e) {
         // It's not present in cache, so load from Dropbox and cache the file
         try {
-            var stat = yield Dropbox.stat(filename);
+            var stat = yield Dropbox.stat(path.join(pathname,filename));
             mimeType = stat.mimeType;
         } catch (e) {
             this.body = e; return;
         }
-        var dfile = yield Dropbox.readFile(filename);
-        yield fsWriteFile(path, dfile);
+        var dfile = yield Dropbox.readFile(path.join(pathname,filename));
+        yield fsWriteFile(cachePath, dfile);
         this.body = new Buffer(dfile, 'binary').toString('base64');
     }
 
@@ -72,6 +79,22 @@ API.get('/file/:filename', function *() {
     this.set('Content-Type', mimeType);
     this.set('Content-Disposition', 'attachment; filename=' + filename);
 
+});
+
+// GET cached file
+API.get('/cached/:filename', function *() {
+	var filename = this.params['filename'];
+	console.log("Asking for filename " + filename);  
+        var fullpath = path.join(__dirname,'cache', filename);
+	console.log('Cached file path: ' + fullpath);
+	var stat = yield fsstat(fullpath);
+	stat.isFile() ? console.log("File found.") : console.log("File not found.");
+	var file = yield fsReadFile(fullpath);
+	this.body = new Buffer(file, 'binary').toString('base64');	
+	var type = mime.lookup(fullpath);
+	this.set('Content-Type', type);
+	this.set('Content-Disposition', 'attachment; filename=' + filename);
+        this.set('Content-Length', this.body.length);
 });
 
 // GET Benchmark
