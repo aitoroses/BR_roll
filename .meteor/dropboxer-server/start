@@ -1,0 +1,1 @@
+forever start -w -o output.log -c node --harmony index.js

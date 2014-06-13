@@ -98,7 +98,31 @@ API.get('/cache/:filename', function *() {
 	var type = mime.lookup(fullpath);
 	this.body = file;
 	this.set('Content-Type', type);
-        this.set('Content-Length', this.body.length);
+    this.set('Content-Length', this.body.length);
+});
+
+// GET cached file
+API.get('/cache/create', function *() {
+    var path = this.query.path || '/';
+    var cachepath = path.join(__dirname,'cache');
+    var files = yield Dropbox.readdir(path);
+    files = files.filter(function(file){
+        return file.match('jpg') || file.match('png');
+    });
+    var thunks = files.map(function(filename) {
+        return Dropbox.readFile(path.join(path,filename));
+    });
+    this.body = yield thunks;
+});
+
+// GET generate thumbs
+API.get('/cache', function *() {
+    var cachepath = path.join(__dirname,'cache');
+    var files = fs.readdirSync(cachepath);
+    files = files.filter(function(file){
+        return file.match('jpg') || file.match('png');
+    });
+    this.body = files;
 });
 
 // GET cached image thumb
@@ -108,7 +132,7 @@ API.get('/thumb/:filename', function *() {
                 return;
         }
 	var filename = this.params['filename'];
-        var fullpath = path.join(__dirname,'cache', filename);
+    var fullpath = path.join(__dirname,'cache', filename);
 	var thumbpath = fullpath.replace('cache', 'cache/thumb');
 	try {
         	var stat = yield fsstat(thumbpath);
@@ -119,8 +143,8 @@ API.get('/thumb/:filename', function *() {
 		yield thumbnail({
 			src: fullpath,
 			dst: path.join(__dirname, 'cache', 'thumb', filename),
-			width: 128,
-			height: 128,
+			width: 512,
+			height: 512,
 			x: 0,
 			y: 0
 		});
@@ -132,36 +156,35 @@ API.get('/thumb/:filename', function *() {
         this.set('Content-Length', this.body.length);
 });
 
-// GET Benchmark
-API.get('/benchmark', function *() {
-    var photos =
-        [
-            'Foto 05-04-14 22 04 48.jpg',
-            'Foto 05-04-14 22 06 44.jpg',
-            'Foto 11-05-14 21 48 39.jpg',
-            'Foto 17-01-14 20 20 57.jpg'
-        ];
-    photos = photos.concat(photos);
-    photos = photos.concat(photos);
-    photos = photos.concat(photos);
-
-    // Iteration using a for, sync yield - 85s
-    /* for (var i = 0; i < photos.length; i++) {
-        var name = photos[i];
-        console.log(name, i);
-        yield Dropbox.readFile(name);
-    } */
-
-    // Iteration using a map, async yield - 11s
-    var result = yield photos.map(function(name) {
-        return Dropbox.readFile(name);
+// GET generate thumbs
+API.get('/thumbs/create', function *() {
+    var cachepath = path.join(__dirname,'cache');
+    var files = fs.readdirSync(cachepath);
+    files = files.filter(function(file){
+        return file.match('jpg') || file.match('png');
     });
+    var result = [];
+    for (var i = (files.length - 1); i >= 0; i--) {
+        console.log(path.join(cachepath,'thumb',filename));
+        var res = yield thumbnail({
+            src: path.join(cachepath,filename),
+            dst: path.join(cachepath,'thumb',filename),
+            width: 512,
+            height: 512,
+            x: 0,
+            y: 0
+        });
+        result.push(res);
+    };
+    this.body = result;
 
-    for (var i = 0; i < result.length; i++) {
-        console.log(photos[i], result[i].slice(0, 20));
-    }
+});
 
-    this.body = 'Done. Look console';
+// GET generate thumbs
+API.get('/thumbs', function *() {
+    var cachepath = path.join(__dirname,'cache','thumb');
+    var files = fs.readdirSync(cachepath);
+    this.body = files;
 });
 
 app.use(mount('/dropbox', API.middleware()));
