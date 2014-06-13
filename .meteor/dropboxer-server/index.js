@@ -165,16 +165,22 @@ API.get('/thumbs/create', function *() {
     });
     var result = [];
     for (var i = (files.length - 1); i >= 0; i--) {
-        console.log(path.join(cachepath,'thumb',filename));
-        var res = yield thumbnail({
-            src: path.join(cachepath,filename),
-            dst: path.join(cachepath,'thumb',filename),
-            width: 512,
-            height: 512,
-            x: 0,
-            y: 0
-        });
-        result.push(res);
+        var filename = files[i];
+        try {
+            var stat = yield fsstat(path.join(cachepath,'thumb',filename));
+            console.log("file %s exists.", filename);
+        } catch (e) {
+            console.log('Generating thumb for %s', filename);
+            var res = yield thumbnail({
+                src: path.join(cachepath,filename),
+                dst: path.join(cachepath,'thumb',filename),
+                width: 512,
+                height: 512,
+                x: 0,
+                y: 0
+            });
+            result.push(res);
+        }
     };
     this.body = result;
 

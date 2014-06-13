@@ -1,1 +1,2 @@
-forever start -w -o output.log -c node --harmony index.js
+#!/bin/bash
+forever start -w -o output.log -c "node --harmony" index.js
