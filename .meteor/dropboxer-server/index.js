@@ -102,20 +102,36 @@ API.get('/cache/:filename', function *() {
 });
 
 // GET cached file
-API.get('/cache/create', function *() {
-    var path = this.query.path || '/';
+API.get('/caches/create', function *() {
+    var pathname = this.query.path || '/';
     var cachepath = path.join(__dirname,'cache');
-    var files = yield Dropbox.readdir(path);
+    var files = yield Dropbox.readdir(pathname);
     files = files.filter(function(file){
         return file.match('jpg') || file.match('png');
     });
-    var thunks = files.map(function(filename) {
-        return Dropbox.readFile(path.join(path,filename));
-    });
-    this.body = yield thunks;
+    var thunks = [];
+    for (var i = files.length - 1; i >= 0; i--) {
+        var filename = files[i];
+        try {
+            var stat = yield fsstat(path.join(cachepath, filename));
+            console.log('%s already exists.', filename);
+        } catch (e) {
+            console.log('Synchronizing %s from dropbox.', filename);
+            var thunk = Dropbox.readFile(path.join(pathname,filename));
+            thunks.push(thunk);
+        }
+    };
+    try {
+        console.log('Proceeding to synchronize the files from dropbox');
+        var result = yield thunks;
+        this.status = 200; 
+    } catch (e) {
+        console.log('Error getting the files from dropbox');
+        this.body = e;
+    }
 });
 
-// GET generate thumbs
+// GET list cache files
 API.get('/cache', function *() {
     var cachepath = path.join(__dirname,'cache');
     var files = fs.readdirSync(cachepath);
@@ -186,7 +202,7 @@ API.get('/thumbs/create', function *() {
 
 });
 
-// GET generate thumbs
+// GET list thumbs
 API.get('/thumbs', function *() {
     var cachepath = path.join(__dirname,'cache','thumb');
     var files = fs.readdirSync(cachepath);
