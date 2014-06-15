@@ -36,16 +36,18 @@ Meteor.startup(function(){
   });
 
   // Modifier for the menu
+  var position = 110
   var menuMod = new StateModifier({
     opacity: 0,
     align: [0,1],
-    transform: Transform.translate(120, - 100, 0)
+    transform: Transform.translate(position + 20, - position, 2)
   });
 
   setInterval(function(){
     var r = this;
     var opacity;
-    if (r._scene == "login" || r._scene == null) {
+
+    if (r._scene == "default" || r._scene == "login" || r._scene == null) {
       opacity = 0;
     } else {
       opacity = 1;

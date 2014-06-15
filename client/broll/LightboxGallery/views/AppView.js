@@ -103,7 +103,11 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
         var sidebar = new SlideSidebarView({
             data: this.options.data
         });
-        this.add(sidebar);
+
+        var sidebarMod = new StateModifier({
+            transform: Transform.translate(0,0,1)
+        })
+        this.add(sidebarMod).add(sidebar);
 
         sidebar.on('thumb', function(index) {
             this._slideshowView.showSlide(index);
