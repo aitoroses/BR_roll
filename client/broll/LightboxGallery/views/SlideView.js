@@ -28,6 +28,7 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
         _createBackground.call(this);
         _createFilm.call(this);
         _createPhoto.call(this);
+        _createFootprint.call(this);
     }
 
     SlideView.prototype = Object.create(View.prototype);
@@ -120,6 +121,27 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
         });
 
         this.mainNode.add(this.photoModifier).add(photo);
+    }
+
+    function _createFootprint() {
+        var footprintSize = this.options.filmSize - 2 * this.options.photoBorder;
+
+        var footprint = new Surface({
+            size: [footprintSize, this.options.photoBorder * 2],
+            content: "Some coment here, another coment here, another comment here",
+            properties: {
+                zIndex: 3,
+                textAlign: 'center'
+            }
+        });
+
+        var footprintModifier = new StateModifier({
+            origin: [0.5, 1],
+            align: [0.5, 1],
+            transform: Transform.translate(0, - 40)
+        });
+
+        this.mainNode.add(footprintModifier).add(footprint);
     }
 
     module.exports = SlideView;
