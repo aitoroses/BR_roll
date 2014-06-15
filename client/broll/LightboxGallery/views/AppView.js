@@ -27,12 +27,13 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
     AppView.DEFAULT_OPTIONS = {
         data: undefined,
         cameraWidth: 0.5 * window.innerHeight,
-        backgroundImage: 'content/images/black-gradient-background.png'
+        backgroundImage: 'content/images/black-gradient-background.png',
     };
 
     AppView.DEFAULT_OPTIONS.slideWidth = 0.8 * AppView.DEFAULT_OPTIONS.cameraWidth;
     AppView.DEFAULT_OPTIONS.slideHeight = AppView.DEFAULT_OPTIONS.slideWidth + 40;
     AppView.DEFAULT_OPTIONS.slidePosition = 0.77 * AppView.DEFAULT_OPTIONS.cameraWidth;
+    AppView.DEFAULT_OPTIONS.defaultTopMargin = 0;
 
     function _createCamera() {
         var camera = new ImageSurface({
@@ -47,7 +48,7 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
         var cameraModifier = new StateModifier({
             origin: [0.5, 0],
             align: [0.5, 0],
-            transform: Transform.translate(0,0,-1)
+            transform: Transform.translate(0,this.options.defaultTopMargin,-1)
         });
 
         this.add(cameraModifier).add(camera);
@@ -66,7 +67,7 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
         var slideshowModifier = new StateModifier({
             origin: [0.5, 0],
             align: [0.5, 0],
-            transform: Transform.translate(0, this.options.slidePosition, 0)
+            transform: Transform.translate(0, this.options.slidePosition + this.options.defaultTopMargin, 0)
         });
 
         var slideshowContainer = new ContainerSurface({

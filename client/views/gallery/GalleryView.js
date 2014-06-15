@@ -30,7 +30,11 @@ define("views/gallery/GalleryView", [], function(require, exports, module){
         //data = SlideData.parse(data);
 
         // instantiates AppView with our url data
-        var appView = new AppView({ data : data });
+        var appView = new AppView({
+            backgroundImage: 'content/images/eiffel-tower.jpg',
+            data : data,
+            defaultTopMargin: window.innerHeight / 20
+        });
 
         node.add(appView);
     }
