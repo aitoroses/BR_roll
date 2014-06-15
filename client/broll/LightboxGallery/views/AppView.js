@@ -39,14 +39,15 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
             size: [this.options.cameraWidth, true],
             content: 'content/images/camera.png',
             properties: {
-                width: '100%'
+                width: '100%',
+                zIndex:1
             }
         });
 
         var cameraModifier = new StateModifier({
             origin: [0.5, 0],
             align: [0.5, 0],
-            transform: Transform.behind
+            transform: Transform.translate(0,0,-1)
         });
 
         this.add(cameraModifier).add(camera);
@@ -70,7 +71,8 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
 
         var slideshowContainer = new ContainerSurface({
             properties: {
-                overflow: 'hidden'
+                overflow: 'hidden',
+                zIndex: 2
             }
         });
 
@@ -85,12 +87,12 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
         var background = new ImageSurface({
             content: this.options.backgroundImage,
             properties: {
-                zIndex: -1
+                zIndex: 0
             }
         });
 
         var backgroundModifier = new StateModifier({
-            transform: Transform.behind
+            transform: Transform.translate(0,0,-1)
         });
 
         this.add(backgroundModifier).add(background);

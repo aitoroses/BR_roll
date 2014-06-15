@@ -56,7 +56,7 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
 
         // returns the slide back to 0 dregrees using a spring transition
         this.rootModifier.setTransform(
-            Transform.identity,
+            Transform.translate(0,0,10),
             { method: 'spring', period: 600, dampingRatio: 0.15 }
         );
     };
