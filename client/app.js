@@ -5,17 +5,35 @@ Meteor.startup(function(){
 
   var Engine  = require('famous/core/Engine');
   var MiniMenu = require('broll/MiniMenu/views/AppView');
-  var Router = require('Router');
+  var FamousRouter = require('Router');
   var StateModifier = require('famous/modifiers/StateModifier');
   var Transform = require('famous/core/Transform');
 
   var mainCtx = Engine.createContext();
   var menuCtx = Engine.createContext();
 
-  var router = new Router();
+  var router = new FamousRouter();
 
   // Create the menu
-  var menu = new MiniMenu();
+  var menu = new MiniMenu({
+    items: [{
+        iconContent: 'content/images/blackPlus.svg',
+        backgroundContent: 'content/images/circle.svg',
+        action: function() {Router.go('/login')}
+    }, {
+        iconContent: 'content/images/blackPlus.svg',
+        backgroundContent: 'content/images/circle.svg',
+        action: function() {Router.go('/main')}
+    }, {
+        iconContent: 'content/images/blackPlus.svg',
+        backgroundContent: 'content/images/circle.svg',
+        action: function() {Router.go('/lightbox')}
+    }, {
+        iconContent: 'content/images/blackPlus.svg',
+        backgroundContent: 'content/images/circle.svg',
+        action: function() {Router.go('/gallery')}
+    }]
+  });
 
   // Modifier for the menu
   var menuMod = new StateModifier({

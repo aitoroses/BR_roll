@@ -27,7 +27,8 @@ define('broll/MiniMenu/views/MenuItemView', [], function(require, exports, modul
     MenuItemView.DEFAULT_OPTIONS = {
         iconContent: 'content/images/blackPlus.svg',
         backgroundContent: 'content/images/circle.svg',
-        itemSize: 40
+        itemSize: 40,
+        action: undefined // function
     };
 
     MenuItemView.DEFAULT_OPTIONS.iconSize = MenuItemView.DEFAULT_OPTIONS.itemSize * 0.7;
@@ -41,6 +42,7 @@ define('broll/MiniMenu/views/MenuItemView', [], function(require, exports, modul
 
         overlay.on('click', function(){
             this._eventOutput.emit('click');
+            if (this.options.action != null) this.options.action();
         }.bind(this));
 
         var background = new ImageSurface({

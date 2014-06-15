@@ -40,7 +40,7 @@ define('broll/MiniMenu/views/MenuView', [], function(require, exports, module) {
 
     // Default options for MenuController class
     MenuController.DEFAULT_OPTIONS = {
-        items: [{}, {}, {}, {}, {}, {}],
+        items: undefined,
         startRotation: 2*Math.PI * (-3/8 - 0.05),
         maxRotation: Math.PI * 1.1,
         radius: 100
@@ -52,22 +52,26 @@ define('broll/MiniMenu/views/MenuView', [], function(require, exports, module) {
         var item = new MenuItemView({
             iconSize: 40,
             properties: {
-                zIndex: 1
+                zIndex: 3
             }
         });
 
         this.angle = new Transitionable(0);
 
+        var zModifier = new StateModifier({
+            transform: Transform.inFront
+        });
+        
         var rotateModifier = new Modifier({
             origin: [0.5,0.5],
-            align: [0.5,0.5]
+            align: [0.5,0.5],
         });
         
         rotateModifier.transformFrom(function(){
             return Transform.rotateZ(this.angle.get());
         }.bind(this));
 
-        this.add(rotateModifier).add(item);
+        this.add(zModifier).add(rotateModifier).add(item);
 
         item.on('click', function(){
             var angle = this.angle.get() === 0 ? (1 + 3/8)*2*Math.PI : 0;
@@ -95,7 +99,7 @@ define('broll/MiniMenu/views/MenuView', [], function(require, exports, module) {
 
             setTimeout(function(){
                 posModifier.setTransform(
-                    Transform.translate(coords.x, coords.y, -10),
+                    Transform.translate(coords.x, coords.y, 0),
                     { duration: 500, curve: Easing.outBack }
                 );
                 posModifier.setOpacity(
@@ -108,7 +112,10 @@ define('broll/MiniMenu/views/MenuView', [], function(require, exports, module) {
     }
 
     function _addMenuItem(menuItem) {
-        var item = new MenuItemView();
+        menuItem.properties = {
+            zIndex: 2
+        }
+        var item = new MenuItemView(menuItem);
         
         var posModifier = new StateModifier({
             origin: [0.5,0.5],

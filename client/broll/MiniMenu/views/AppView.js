@@ -31,12 +31,16 @@ define('broll/MiniMenu/views/AppView', [], function(require, exports, module) {
     AppView.prototype.constructor = AppView;
 
     // Default options for AppView class
-    AppView.DEFAULT_OPTIONS = {};
+    AppView.DEFAULT_OPTIONS = {
+        items: [{}, {}, {}, {}]
+    };
 
     // Define your helper functions and prototype methods here
 
     function _createMenu() {
-    	var menu = new MenuView();
+    	var menu = new MenuView({
+            items: this.options.items
+        });
     	this.mainNode.add(menu);
     }
 
