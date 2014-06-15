@@ -36,7 +36,7 @@ define(function(require, exports, module) {
             inOpacity: 1,
             inOrigin: [0,0],
             showOrigin: [0,0],
-            showTransform: Transform.translate(0,0,0),
+            showTransform: Transform.translate(0,0,2),
             outTransform: Transform.thenMove(Transform.rotateZ(0.7), [0, window.innerHeight, -1000]),
             outOpacity: 0,
             outOrigin: [0,0],

@@ -9,8 +9,8 @@
     "packages": {
       "famono": {
         "git": "https://github.com/raix/Meteor-famono.git",
-        "tag": "v0.3.2",
-        "commit": "1128e321371f33afc2ffacc00923761ecaf462e8"
+        "tag": "v0.3.3",
+        "commit": "e953d5f1f7a9906d3df86472b9582f14cc3e4699"
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",

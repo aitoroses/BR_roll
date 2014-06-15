@@ -16,6 +16,8 @@ define("Router", [], function(require, exports, module){
 
 			_cached = this;
 
+			this._scene = null;
+
 			return this;
 		}
 	}
@@ -35,6 +37,7 @@ define("Router", [], function(require, exports, module){
 
 	FamousRouter.prototype.renderScene = function(scene) {
 		var sceneView = this._routes[scene]();
+		this._scene = scene;
 		this._renderController.show(sceneView);
 		if (sceneView.animation != undefined) {
 			sceneView.animation.enter();
@@ -78,6 +81,9 @@ define("Router", [], function(require, exports, module){
 						function () {
 					    	return Meteor.subscribe('images');
 						},
+						function() {
+							//return Meteor.subscribe('comments');
+						}
 					]
 				});
 			};

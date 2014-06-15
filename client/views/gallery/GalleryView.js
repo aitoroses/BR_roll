@@ -16,7 +16,7 @@ define("views/gallery/GalleryView", [], function(require, exports, module){
     // Utility.loadURL(SlideData.getUrl(), initApp);
 
     function parseData() {
-        var data = Dropboxer.collection.find().fetch();
+        var data = Dropboxer.collection.find({}, {sort: {filename: 1}}).fetch();
         return data.map(function(image){
             // return 'data:' + image.mime + ';base64,' + image.data; 
 	        return 'http://' + location.hostname + ':3100/dropbox/thumb/' + image.filename;
