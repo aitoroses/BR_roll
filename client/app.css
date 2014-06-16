@@ -1,3 +1,13 @@
 * {
 	box-sizing: border-box;
 }
+
+/* MR wonderful like font*/
+@font-face {
+    font-family: Wonderful;
+    src: url('/fonts/Brain Flower Euro.ttf');
+}
+
+.wonderful {
+	font-family: Wonderful;
+}

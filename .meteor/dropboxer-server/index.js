@@ -12,7 +12,8 @@ var thumbnail = thunkify(easyimg.thumbnail);
 var koa = require('koa'),
     etag = require('koa-etag'),
     Router = require('koa-router'),
-    mount = require('koa-mount');
+    mount = require('koa-mount'),
+    co = require('co');
 
 // Custom Dropbox library
 var Dropbox = require('./lib');
@@ -240,7 +241,7 @@ API.get('/thumbs', function *() {
 });
 
 // GET sync images with meteor collection
-API.get('/sync', function *(){
+API.get('/sync/images', function *(){
     var path = this.query.path || '/';
     var collectionArg = this.query.collection || "images";
     var clean = this.query.clean;
@@ -252,9 +253,6 @@ API.get('/sync', function *(){
         console.log("Error reading dir.")
         return;
     }
-    files = files.filter(function(file){
-        return file.toLowerCase().match('jpg');
-    });
 
     var monk = require('monk');
     var wrap = require('co-monk');
@@ -274,6 +272,42 @@ API.get('/sync', function *(){
     });
 
     this.body = format("Synched! %s to %s", path, collectionArg);
+});
+
+API.get('/comments/create', function *(){
+    var pathname = this.query.path || '/';
+    var files;
+    try {
+     files = yield Dropbox.readdir(pathname);
+    } catch (e) {
+        console.log("Error reading dir.")
+        return;
+    }
+    var json = {};
+    files.forEach(function(image){
+         json[image] = "";
+    });
+    var savepath = path.join(__dirname, "comments.json");
+    console.log("Saving to %s", savepath);
+    this.body = yield fsWriteFile(savepath, JSON.stringify(json, null, 4));
+})
+
+API.get('/sync/comments', function *(){
+    var monk = require('monk');
+    var wrap = require('co-monk');
+    var db = monk('localhost');
+
+    var comments = require('./comments.json');
+    var images = wrap(db.get('images'));
+
+    var foundImages = yield images.find({});
+    foundImages.forEach(function (image) {
+        co(function *(){
+            var res = yield images.updateById(image._id, {$set: {comment: comments[image.filename]}});
+            console.log(res);
+        })();
+    });
+    this.status = 200;
 });
 
 app.use(mount('/dropbox', API.middleware()));

@@ -57,7 +57,8 @@ define('broll/LightboxGallery/views/SlideshowView', [], function(require, export
         for (var i = 0; i < this.options.data.length; i++) {
             var slide = new SlideView({
                 size: this.options.size,
-                photoUrl: this.options.data[i]
+                photoUrl: this.options.data[i].location,
+                comment: this.options.data[i].comment
             });
 
             this.slides.push(slide);

@@ -38,8 +38,9 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
         size: [400, 450],
         filmBorder: 15,
         photoBorder: 3,
-        //photoUrl: SlideData.defaultImage,
-        angle: -0.5
+        photoUrl: undefined,
+        angle: -0.5,
+        comment: "Some coment here, another coment here, another comment here"
     };
 
     SlideView.prototype.fadeIn = function() {
@@ -129,11 +130,13 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
 
         var footprint = new Surface({
             size: [footprintSize, this.options.photoBorder * 2],
-            content: "Some coment here, another coment here, another comment here",
+            content: this.options.comment,
+            classes: ["wonderful"],
             properties: {
                 zIndex: 3,
                 textAlign: 'center',
-                pointerEvents: 'none'
+                pointerEvents: 'none',
+                fontSize: "22px"
             }
         });
 

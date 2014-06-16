@@ -84,7 +84,7 @@ define('broll/LightboxGallery/views/SlideSidebarView', [], function(require, exp
         for (var i = 0; i < this.options.data.length; i++) {
             var slide = new ImageSurface({
                 size: [100, 100],
-                content: this.options.data[i]
+                content: this.options.data[i].location
             });
 
             var slideModifier = new StateModifier({
