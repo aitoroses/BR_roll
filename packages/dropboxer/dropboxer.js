@@ -80,7 +80,7 @@ if (Meteor.isServer) {
                     var imageObj = {
                         filename: image,
                         //data: res.content,
-			data: uri.replace('file', 'cache'),
+                        data: uri.replace('file', 'cache'),
                         mime: res.headers['content-type'],
                         created_at: new Date
                     };

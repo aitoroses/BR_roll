@@ -1,4 +1,5 @@
 var fs = require('fs');
+var format = require('util').format;
 var path = require('path');
 var mime = require('mime');
 var thunkify = require('thunkify');
@@ -107,26 +108,51 @@ API.get('/caches/create', function *() {
     var cachepath = path.join(__dirname,'cache');
     var files = yield Dropbox.readdir(pathname);
     files = files.filter(function(file){
-        return file.match('jpg') || file.match('png');
+        return file.toLowerCase().match('jpg') || file.match('png');
     });
     var thunks = [];
     for (var i = files.length - 1; i >= 0; i--) {
         var filename = files[i];
         try {
             var stat = yield fsstat(path.join(cachepath, filename));
-            console.log('%s already exists.', filename);
+            //console.log('%s already exists.', filename);
         } catch (e) {
             console.log('Synchronizing %s from dropbox.', filename);
-            var thunk = Dropbox.readFile(path.join(pathname,filename));
-            thunks.push(thunk);
+            var process = function(filename) {
+                return function(callback) {
+                    Dropbox.readFile(path.join(pathname,filename))(function(err, dropfile) {
+                        fsWriteFile(path.join(cachepath, filename), dropfile)(callback);
+                    });
+                }
+            }
+            thunks.push(process(filename));
         }
     };
     try {
         console.log('Proceeding to synchronize the files from dropbox');
-        var result = yield thunks;
-        this.status = 200; 
+        // Save the files
+        var fileNum = thunks.length;
+        var processing = [];
+        while (thunks.length > 0) {
+            var taken = 0;
+            while (taken < 12) {
+                // take loop
+                var thunk = thunks.shift();
+                if (thunk) {
+                    processing.push(thunk);
+                    taken++;
+                } else { break; }
+            }
+            console.log("Processed " + (1 - thunks.length / fileNum) * 100 + '%');
+            yield processing;
+            taken = 0;
+            processing = [];
+        }
+        yield processing;
+        this.body = files; 
     } catch (e) {
         console.log('Error getting the files from dropbox');
+        console.log(e)
         this.body = e;
     }
 });
@@ -136,7 +162,7 @@ API.get('/cache', function *() {
     var cachepath = path.join(__dirname,'cache');
     var files = fs.readdirSync(cachepath);
     files = files.filter(function(file){
-        return file.match('jpg') || file.match('png');
+        return file.toLowerCase().match('jpg') || file.match('png');
     });
     this.body = files;
 });
@@ -177,25 +203,29 @@ API.get('/thumbs/create', function *() {
     var cachepath = path.join(__dirname,'cache');
     var files = fs.readdirSync(cachepath);
     files = files.filter(function(file){
-        return file.match('jpg') || file.match('png');
+        return file.toLowerCase().match('jpg') || file.match('png');
     });
     var result = [];
     for (var i = (files.length - 1); i >= 0; i--) {
         var filename = files[i];
         try {
             var stat = yield fsstat(path.join(cachepath,'thumb',filename));
-            console.log("file %s exists.", filename);
+            //console.log("file %s exists.", filename);
         } catch (e) {
-            console.log('Generating thumb for %s', filename);
-            var res = yield thumbnail({
-                src: path.join(cachepath,filename),
-                dst: path.join(cachepath,'thumb',filename),
-                width: 512,
-                height: 512,
-                x: 0,
-                y: 0
-            });
-            result.push(res);
+            try {
+                console.log('Generating thumb for %s', filename);
+                var res = yield thumbnail({
+                    src: path.join(cachepath,filename),
+                    dst: path.join(cachepath,'thumb',filename),
+                    width: 512,
+                    height: 512,
+                    x: 0,
+                    y: 0
+                });
+                result.push(res);
+            } catch (e) {
+                console.log("Error generating thumb for " + filename);
+            }
         }
     };
     this.body = result;
@@ -207,6 +237,43 @@ API.get('/thumbs', function *() {
     var cachepath = path.join(__dirname,'cache','thumb');
     var files = fs.readdirSync(cachepath);
     this.body = files;
+});
+
+// GET sync images with meteor collection
+API.get('/sync', function *(){
+    var path = this.query.path || '/';
+    var collectionArg = this.query.collection || "images";
+    var clean = this.query.clean;
+
+    var files;
+    try {
+     files = yield Dropbox.readdir(path);
+    } catch (e) {
+        console.log("Error reading dir.")
+        return;
+    }
+    files = files.filter(function(file){
+        return file.toLowerCase().match('jpg');
+    });
+
+    var monk = require('monk');
+    var wrap = require('co-monk');
+    var db = monk('localhost');
+
+    var collection = wrap(db.get(collectionArg));
+
+    if (clean == "true") {collection.remove({})}
+
+    var index = 1;
+    files.forEach(function(image){
+        collection.insert({
+            filename: image,
+            index: index++,
+            date: new Date
+        });
+    });
+
+    this.body = format("Synched! %s to %s", path, collectionArg);
 });
 
 app.use(mount('/dropbox', API.middleware()));

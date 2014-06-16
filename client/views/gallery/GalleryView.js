@@ -30,8 +30,10 @@ define("views/gallery/GalleryView", [], function(require, exports, module){
         //data = SlideData.parse(data);
 
         // instantiates AppView with our url data
+        // random background
+
         var appView = new AppView({
-            backgroundImage: 'content/images/eiffel-tower.jpg',
+            backgroundImage: 'content/background/' + ["IMG_1946.jpg"][Math.floor((Math.random() * 1))],
             data : data,
             defaultTopMargin: window.innerHeight / 20
         });

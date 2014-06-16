@@ -68,7 +68,8 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
             properties: {
                 backgroundColor: '#FFFFF5',
                 boxShadow: '0 10px 20px -5px rgba(0, 0, 0, 0.5)',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                pointerEvents: 'none'
             }
         });
 
@@ -131,7 +132,8 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
             content: "Some coment here, another coment here, another comment here",
             properties: {
                 zIndex: 3,
-                textAlign: 'center'
+                textAlign: 'center',
+                pointerEvents: 'none'
             }
         });
 

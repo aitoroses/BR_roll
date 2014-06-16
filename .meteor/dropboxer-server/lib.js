@@ -2,7 +2,7 @@
 var thunkify = require('thunkify'),
     Dropbox = require('dropbox');
 
-var token = 'gTwwMn7WAaoAAAAAAAAR5GYZDabJaQQD0SEnmxmQsc8Civ2GMBc_sttOfqJygpnc';
+var token = 'gTwwMn7WAaoAAAAAAAATFuIUcjt5Ov9qEJx5CKqvAh8iKxsRJfeM8P15sD9wD2r1';
 var client = new Dropbox.Client({
     token: token
 });

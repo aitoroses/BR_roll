@@ -21,7 +21,9 @@ define("Navigation", [], function(require, exports, module){
 	};
 
 	Navigation.prototype.render = function(scene) {
-		this._router.renderScene(scene);
+		if(scene == "default" || sessionStorage.getItem('user') != null) {
+			this._router.renderScene(scene);
+		}
 	};
 
 

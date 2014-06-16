@@ -19,10 +19,22 @@ var galleryScene = function() {
 	return require("views/gallery/GalleryView");
 };
 
+// Comments
+
+// Words
+var words = function() {
+	return require('views/words/WordsScene');
+}
+
+// Old web
+
 router.defaultRoute(loginScene);
 router.addRoute("login", loginScene);
+router.addRoute("words", words);
 router.addRoute("main", mainScene);
 router.addRoute("lightbox", lightboxScene);
 router.addRoute("gallery", galleryScene);
+//router.addRoute("comments", comments);
+//router.addRoute("oldweb", oldweb);
 
 router.init();

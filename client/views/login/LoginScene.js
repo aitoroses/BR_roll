@@ -37,11 +37,17 @@ define("views/login/LoginScene", [], function(require, exports, module){
 		events: {
 			"click": {
 				".sign-in": function() {
-					_animateOut(function() {
-						// When animation finished go to main
-						var navigate = new Navigation();
-						navigate.go("main");
-					});
+					// Check if valid user name and password
+					var user = $('input[name="login"]').val();
+					var password = $('input[name="password"]').val();
+					if ((user == "aitor" || user == "momo") && password == "breadroll1") {
+						sessionStorage.setItem('user', user);
+						_animateOut(function() {
+							// When animation finished go to main
+							var navigate = new Navigation();
+							navigate.go("main");
+						});
+					}
 				}
 			}
 		}
