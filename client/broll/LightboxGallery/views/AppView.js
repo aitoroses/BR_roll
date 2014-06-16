@@ -31,7 +31,7 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
     };
 
     AppView.DEFAULT_OPTIONS.slideWidth = 0.8 * AppView.DEFAULT_OPTIONS.cameraWidth;
-    AppView.DEFAULT_OPTIONS.slideHeight = AppView.DEFAULT_OPTIONS.slideWidth + 40;
+    AppView.DEFAULT_OPTIONS.slideHeight = AppView.DEFAULT_OPTIONS.slideWidth + 70; // + 40
     AppView.DEFAULT_OPTIONS.slidePosition = 0.77 * AppView.DEFAULT_OPTIONS.cameraWidth;
     AppView.DEFAULT_OPTIONS.defaultTopMargin = 0;
 

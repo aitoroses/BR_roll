@@ -11,8 +11,6 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
 
     Transitionable.registerMethod('spring', SpringTransition);
 
-    //var SlideData = require('../data/SlideData');
-
     function SlideView() {
         View.apply(this, arguments);
                 
@@ -143,7 +141,7 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
         var footprintModifier = new StateModifier({
             origin: [0.5, 1],
             align: [0.5, 1],
-            transform: Transform.translate(0, - 40)
+            transform: Transform.translate(0, - 70)
         });
 
         this.mainNode.add(footprintModifier).add(footprint);
