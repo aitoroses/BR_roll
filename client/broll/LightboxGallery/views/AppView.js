@@ -26,7 +26,7 @@ define('broll/LightboxGallery/views/AppView', [], function(require, exports, mod
 
     AppView.DEFAULT_OPTIONS = {
         data: undefined,
-        cameraWidth: 0.5 * window.innerHeight,
+        cameraWidth: 0.55 * window.innerHeight,
         backgroundImage: 'content/images/black-gradient-background.png',
     };
 

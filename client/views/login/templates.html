@@ -8,13 +8,21 @@
     <form class="login-form">
         {{> LoginInputs}}
         {{> LoginSubmit}}
+
     </form>
+    <img src="content/background/IMG_1946.jpg" style="visibility: hidden">
+    <img src="content/background/camera.png" style="visibility: hidden">
+    <img src="content/background/30sec_pastilla.png" style="visibility: hidden">
+    <img src="content/background/sexys1.gif" style="visibility: hidden">
+    <img src="content/background/sexys2.gif" style="visibility: hidden">
+    <!-- LOAD IMAGES -->
+    <!-- LOAD IMAGES -->
 </template>
 
 <template name="LoginInputs">
     <div class="inputs">
         <input class="form-input" type="text" id="login" name="login" placeholder="¿Quien eres?">
-        <input class="form-input" type="password" name="password" id="password" placeholder="Contraseña">
+        <input class="form-input" type="password" name="password" id="password" placeholder="¿Que contraseña?">
     </div>
 </template>
 
@@ -23,4 +31,5 @@
         <div class="infinite">&infin;</div>
         <div class="sign-in">Entra</div>
     </button>
+    
 </template>

@@ -37,7 +37,7 @@ define("views/gallery/GalleryView", [], function(require, exports, module){
         var appView = new AppView({
             backgroundImage: 'content/background/' + ["IMG_1946.jpg"][Math.floor((Math.random() * 1))],
             data : data,
-            defaultTopMargin: window.innerHeight / 20
+            defaultTopMargin: 0//window.innerHeight / 50
         });
 
         node.add(appView);

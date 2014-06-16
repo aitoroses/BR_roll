@@ -47,7 +47,7 @@ Meteor.startup(function(){
     var r = this;
     var opacity;
 
-    if (r._scene == "default" || r._scene == "login" || r._scene == null) {
+    if (r._scene == "default" || r._scene == "login" || r._scene == "main" || r._scene == null) {
       opacity = 0;
     } else {
       opacity = 1;

@@ -134,7 +134,8 @@ define('broll/LightboxGallery/views/SlideView', [], function(require, exports, m
                 zIndex: 3,
                 textAlign: 'center',
                 pointerEvents: 'none',
-                fontSize: "22px"
+                fontSize: this.options.filmSize / 12 + "px",
+		fontWeight: "bold"
             }
         });
 
