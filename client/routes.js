@@ -21,7 +21,7 @@ var galleryScene = function() {
 
 // Videos
 var videos = function() {
-	return require("views/videos/AppView");
+	return require("views/videos/Scene");
 };
 
 // Comments
