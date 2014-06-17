@@ -15,6 +15,8 @@ define('views/videos/WritingView', [], function(require, exports, module) {
         // Applies View's constructor function to WritingView class
         View.apply(this, arguments);
 
+        this.ready = false;
+
         _createContent.call(this);
     }
 
@@ -34,6 +36,10 @@ define('views/videos/WritingView', [], function(require, exports, module) {
 
     // Define your helper functions and prototype methods here
 
+    WritingView.prototype.activate = function() {
+        this.ready = true;
+    }
+
     function _createContent() {
         var surface = new Surface({
             size: this.options.size,
@@ -52,6 +58,7 @@ define('views/videos/WritingView', [], function(require, exports, module) {
             var content = this.options.content;
             var char = 0;
             return function() {
+                if (!this.ready) return "";
                 if (char > content.length) {
                     clearInterval(inter);
                     return content;
@@ -60,8 +67,9 @@ define('views/videos/WritingView', [], function(require, exports, module) {
             }
         }
         var content = _generator.call(this);
+        var context = this;
         var inter = setInterval(function(){
-            surface.setContent(content());
+            surface.setContent(content.call(context));
         },this.options.velocity * 1000);
 
         var mod = new StateModifier({

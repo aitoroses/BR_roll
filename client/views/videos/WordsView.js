@@ -37,7 +37,10 @@ define("views/videos/WordsView", [], function(require, exports, module) {
 
     WordsView.prototype.show = function() {
     	var num = this.index > this.writings.length ? this.writings.length : this.index;
-    	this._controller.show(this.writings[this.index]);
+    	var writing = this.writings[this.index];
+    	this._controller.show(writing);
+  		// Activate the writing state
+    	writing.activate();
     }
 
     function _createWritingViews() {
@@ -49,7 +52,7 @@ define("views/videos/WordsView", [], function(require, exports, module) {
     	WritingData.map(function(writing) {
     		var write = new WritingView({
     			content: writing
-    		});xz
+    		});
     		this.writings.push(write);
     	}.bind(this));
 
