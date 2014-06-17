@@ -17,23 +17,27 @@ Meteor.startup(function(){
   // Create the menu
   var menu = new MiniMenu({
     items: [{
-        iconContent: 'content/images/blackPlus.svg',
+        iconContent: 'content/svg/loginMenuItem.svg',
         backgroundContent: 'content/images/circle.svg',
         action: function() {Router.go('/login')}
     }, {
-        iconContent: 'content/images/blackPlus.svg',
+        iconContent: 'content/svg/entradaMenuItem.svg',
         backgroundContent: 'content/images/circle.svg',
         action: function() {Router.go('/main')}
     }, {
-        iconContent: 'content/images/blackPlus.svg',
+        iconContent: 'content/svg/galleryMenuItem.svg',
         backgroundContent: 'content/images/circle.svg',
         action: function() {Router.go('/gallery')}
     },{
-        iconContent: 'content/images/blackPlus.svg',
+        iconContent: 'content/svg/videosMenuItem.svg',
         backgroundContent: 'content/images/circle.svg',
         action: function() {Router.go('/videos')}
     },{
-        iconContent: 'content/images/blackPlus.svg',
+        iconContent: 'content/svg/commentsMenuItem.svg',
+        backgroundContent: 'content/images/circle.svg',
+        action: function() {Router.go('/comments')}
+    }, {
+        iconContent: 'content/svg/oldwebMenuItem.svg',
         backgroundContent: 'content/images/circle.svg',
         action: function() {Router.go('/oldweb')}
     }]
