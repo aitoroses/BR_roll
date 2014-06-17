@@ -81,6 +81,11 @@ define("views/login/LoginScene", [], function(require, exports, module){
 		leave: _animateOut
 	};
 
+	var Sound = require("Sound");
+	var s = new Sound();
+	s.load('birth');
+
 	module.exports = scene;
+
 	
 });

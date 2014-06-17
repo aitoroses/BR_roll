@@ -27,11 +27,15 @@ Meteor.startup(function(){
     }, {
         iconContent: 'content/images/blackPlus.svg',
         backgroundContent: 'content/images/circle.svg',
-        action: function() {Router.go('/lightbox')}
-    }, {
+        action: function() {Router.go('/gallery')}
+    },{
         iconContent: 'content/images/blackPlus.svg',
         backgroundContent: 'content/images/circle.svg',
-        action: function() {Router.go('/gallery')}
+        action: function() {Router.go('/videos')}
+    },{
+        iconContent: 'content/images/blackPlus.svg',
+        backgroundContent: 'content/images/circle.svg',
+        action: function() {Router.go('/oldweb')}
     }]
   });
 

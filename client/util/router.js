@@ -2,7 +2,7 @@ define("Router", [], function(require, exports, module){
 	"use strict";
 
 	var _cached = null;
-
+	
 	function FamousRouter() {
 
 		if(_cached != null) {return _cached;}

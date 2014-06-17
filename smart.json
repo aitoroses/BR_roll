@@ -2,6 +2,7 @@
   "packages": {
     "famono": {},
     "iron-router": {},
-    "npm": {}
+    "npm": {},
+    "buzz.js": {}
   }
 }

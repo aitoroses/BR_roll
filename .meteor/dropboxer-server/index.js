@@ -304,10 +304,9 @@ API.get('/sync/comments', function *(){
     foundImages.forEach(function (image) {
         co(function *(){
             var res = yield images.updateById(image._id, {$set: {comment: comments[image.filename]}});
-            console.log(res);
         })();
     });
-    this.status = 200;
+    this.body = "Finished for " + Math.floor(Math.random() * 65535);
 });
 
 app.use(mount('/dropbox', API.middleware()));

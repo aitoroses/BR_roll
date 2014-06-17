@@ -19,7 +19,15 @@ var galleryScene = function() {
 	return require("views/gallery/GalleryView");
 };
 
+// Videos
+var videos = function() {
+	return require("views/videos/AppView");
+};
+
 // Comments
+var comments = function() {
+	return require("views/comments/AppView");
+};
 
 // Words
 var words = function() {
@@ -27,14 +35,17 @@ var words = function() {
 }
 
 // Old web
+var oldweb = function() {
+	return require('views/oldweb/AppView');
+}
 
 router.defaultRoute(loginScene);
 router.addRoute("login", loginScene);
 router.addRoute("words", words);
 router.addRoute("main", mainScene);
-router.addRoute("lightbox", lightboxScene);
+router.addRoute("videos", videos);
 router.addRoute("gallery", galleryScene);
-//router.addRoute("comments", comments);
-//router.addRoute("oldweb", oldweb);
+router.addRoute("comments", comments);
+router.addRoute("oldweb", oldweb);
 
 router.init();
